@@ -1,3 +1,5 @@
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
 const skills = [
   {
     name: "HTML",
@@ -47,10 +49,12 @@ const skills = [
 ];
 
 const SkillsSection = () => {
+  const heading = useScrollReveal({ variant: "fade-up" });
+
   return (
     <section id="skills" className="py-24 sm:py-32">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="section-reveal">
+        <div ref={heading.ref} style={heading.style}>
           <span className="text-sm font-medium text-primary uppercase tracking-widest">Skills</span>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-2">
             Technologies I work with
@@ -58,22 +62,31 @@ const SkillsSection = () => {
         </div>
 
         <div className="mt-12 flex flex-wrap justify-center gap-6">
-          {skills.map((skill) => (
-            <div
-              key={skill.name}
-              className="hover-lift group flex flex-col items-center gap-3 p-8 rounded-2xl bg-card border border-border w-40 sm:w-44"
-              style={{ boxShadow: 'var(--shadow-card)' }}
-            >
-              <div className="text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                {skill.icon}
-              </div>
-              <span className="font-heading font-semibold text-foreground text-sm">{skill.name}</span>
-              <span className="text-xs text-muted-foreground">{skill.level}</span>
-            </div>
+          {skills.map((skill, i) => (
+            <SkillCard key={skill.name} skill={skill} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+const SkillCard = ({ skill, index }: { skill: typeof skills[0]; index: number }) => {
+  const card = useScrollReveal({ variant: "flip-up", delay: index * 120 });
+
+  return (
+    <div
+      ref={card.ref}
+      style={card.style}
+      className="hover-lift group flex flex-col items-center gap-3 p-8 rounded-2xl bg-card border border-border w-40 sm:w-44 cursor-default"
+      {...{ style: { ...card.style, boxShadow: 'var(--shadow-card)' } }}
+    >
+      <div className="text-muted-foreground group-hover:text-primary transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
+        {skill.icon}
+      </div>
+      <span className="font-heading font-semibold text-foreground text-sm">{skill.name}</span>
+      <span className="text-xs text-muted-foreground">{skill.level}</span>
+    </div>
   );
 };
 
