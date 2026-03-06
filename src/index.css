@@ -138,6 +138,85 @@
   }
 }
 
+/* Hero floating orbs */
+@keyframes floatSlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes floatSlower {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, -30px) scale(1.08); }
+}
+.animate-float-slow { animation: floatSlow 8s ease-in-out infinite; }
+.animate-float-slower { animation: floatSlower 12s ease-in-out infinite; }
+
+/* Gentle pulse */
+@keyframes pulseGentle {
+  0%, 100% { opacity: 0.03; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.06; transform: translate(-50%, -50%) scale(1.1); }
+}
+.animate-pulse-gentle { animation: pulseGentle 6s ease-in-out infinite; }
+
+/* Particle drift */
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-100px) translateX(40px); opacity: 0; }
+}
+.animate-drift { animation: drift 8s ease-in-out infinite; }
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Text reveal */
+@keyframes textReveal {
+  from { opacity: 0; transform: translateY(20px) rotateX(10deg); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+.animate-text-reveal { animation: textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Slow bounce for scroll indicator */
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.animate-bounce-slow { animation: bounceSlow 2s ease-in-out infinite; }
+
+/* Phone ring */
+@keyframes phoneRing {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(15deg); }
+  20% { transform: rotate(-15deg); }
+  30% { transform: rotate(10deg); }
+  40% { transform: rotate(-10deg); }
+  50% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+.animate-phone-ring { animation: phoneRing 0.8s ease-in-out; }
+
+/* Timeline grow */
+@keyframes timelineGrow {
+  from { height: 0; }
+  to { height: 100%; }
+}
+.animate-timeline-grow { animation: timelineGrow 2s ease-out both; }
+
+/* Gradient shift */
+@keyframes gradientShift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(15deg); }
+}
+.animate-gradient-shift { animation: gradientShift 4s ease-in-out infinite; }
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
