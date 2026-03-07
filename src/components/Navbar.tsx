@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -40,18 +41,48 @@ const socialLinks = [
   },
 ];
 
+const ThemeToggle = () => {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="relative h-8 w-14 rounded-full bg-muted border border-border p-0.5 transition-all duration-300 hover:shadow-md hover:border-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+    >
+      <span
+        className={`absolute top-0.5 flex h-[26px] w-[26px] items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm transition-all duration-400 ease-[cubic-bezier(0.68,-0.2,0.27,1.2)] ${
+          isDark ? "left-[calc(100%-28px)]" : "left-0.5"
+        }`}
+      >
+        <Sun
+          size={14}
+          className={`absolute transition-all duration-300 ${
+            isDark ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
+          }`}
+        />
+        <Moon
+          size={14}
+          className={`absolute transition-all duration-300 ${
+            isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
+          }`}
+        />
+      </span>
+    </button>
+  );
+};
+
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
         <a href="#" className="font-heading text-2xl font-bold text-foreground tracking-tight">
           RS<span className="text-primary">.</span>
         </a>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
@@ -64,8 +95,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Social icons */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-4">
           {socialLinks.map((link) => (
             <a
               key={link.label}
@@ -78,19 +108,22 @@ const Navbar = () => {
               {link.icon}
             </a>
           ))}
+          <div className="w-px h-5 bg-border mx-1" />
+          <ThemeToggle />
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex md:hidden items-center gap-3">
+          <ThemeToggle />
+          <button
+            className="text-foreground"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-border px-6 py-6 animate-fade-in-up">
           <div className="flex flex-col gap-4">
