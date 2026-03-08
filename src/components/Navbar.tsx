@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -76,6 +76,7 @@ const ThemeToggle = () => {
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -83,7 +84,27 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on resize
+  // Active section tracking via IntersectionObserver
+  useEffect(() => {
+    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -55% 0px" }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   useEffect(() => {
     const handleResize = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
     window.addEventListener("resize", handleResize);
@@ -92,29 +113,42 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/85 backdrop-blur-xl border-b border-border shadow-sm"
+          ? "bg-background/70 backdrop-blur-2xl border-b border-border/50 shadow-sm"
           : "bg-transparent border-b border-transparent"
       }`}
     >
       <div className="section-container h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-heading text-xl sm:text-2xl font-bold text-foreground tracking-tight shrink-0">
-          RS<span className="text-primary">.</span>
+        <a href="#" className="font-heading text-xl sm:text-2xl font-bold text-foreground tracking-tight shrink-0 group">
+          RS<span className="text-primary transition-transform duration-300 inline-block group-hover:scale-125">.</span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1 lg:gap-2">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-all duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
+        <div className="hidden md:flex items-center gap-1 lg:gap-1.5">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.replace("#", "");
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`relative px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+                {/* Animated underline */}
+                <span
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-primary transition-all duration-300 ${
+                    isActive ? "w-4" : "w-0"
+                  }`}
+                />
+              </a>
+            );
+          })}
         </div>
 
         {/* Desktop right */}
@@ -125,7 +159,7 @@ const Navbar = () => {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 hover:scale-110"
               aria-label={link.label}
             >
               {link.icon}
@@ -143,25 +177,36 @@ const Navbar = () => {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            <div className="relative w-5 h-5">
+              <Menu size={20} className={`absolute inset-0 transition-all duration-300 ${mobileOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'}`} />
+              <X size={20} className={`absolute inset-0 transition-all duration-300 ${mobileOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'}`} />
+            </div>
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-background/98 backdrop-blur-xl border-b border-border animate-slide-down">
+      <div className={`md:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${mobileOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="bg-background/95 backdrop-blur-2xl border-b border-border">
           <div className="section-container py-4 space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link, i) => {
+              const isActive = activeSection === link.href.replace("#", "");
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`block px-4 py-3 text-base font-medium rounded-xl transition-all duration-300 ${
+                    isActive
+                      ? "text-primary bg-primary/5"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  }`}
+                  style={{ transitionDelay: `${i * 30}ms` }}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
             <div className="flex gap-2 pt-4 mt-2 border-t border-border">
               {socialLinks.map((link) => (
                 <a
@@ -169,7 +214,7 @@ const Navbar = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-muted/50 transition-all duration-200"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary-foreground hover:bg-primary transition-all duration-200"
                   aria-label={link.label}
                 >
                   {link.icon}
@@ -178,7 +223,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

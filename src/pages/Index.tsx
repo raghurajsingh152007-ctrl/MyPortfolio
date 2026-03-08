@@ -7,10 +7,12 @@ import AchievementsSection from "@/components/AchievementsSection";
 import EducationSection from "@/components/EducationSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 
 const Index = () => {
   return (
     <>
+      <CustomCursor />
       <Navbar />
       <HeroSection />
       <AboutSection />
