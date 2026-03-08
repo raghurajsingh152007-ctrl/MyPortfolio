@@ -3,7 +3,7 @@
 This is my personal developer portfolio website showcasing my skills, projects, and technical journey as a Computer Science student and aspiring Full Stack Developer.
 
 🌐 **Live Website:**  
-https://my-portfolio-cys3r9vdv-raghurajsingh152007-ctrls-projects.vercel.app/
+https://my-portfolio-twta.vercel.app/
 
 ---
 
