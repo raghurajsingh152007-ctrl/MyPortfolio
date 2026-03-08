@@ -1,73 +1,111 @@
-# Welcome to your Lovable project
+# 💼 Raghuraj Singh — Developer Portfolio
 
-## Project info
+This is my personal developer portfolio website showcasing my skills, projects, and technical journey as a Computer Science student and aspiring Full Stack Developer.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+🌐 **Live Website:**  
+https://my-portfolio-cys3r9vdv-raghurajsingh152007-ctrls-projects.vercel.app/
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+# 🚀 About The Project
 
-**Use Lovable**
+This portfolio website was created to present my:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- Technical skills
+- Development projects
+- Education and learning journey
+- Contact information
 
-Changes made via Lovable will be committed automatically to this repo.
+The website acts as a central place where recruiters, collaborators, and developers can explore my work and learn more about me.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# 🧑‍💻 About Me
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Hello! I'm **Raghuraj Singh**, a B.Tech Computer Science Engineering student passionate about software development and technology.
 
-Follow these steps:
+I enjoy building modern web applications and continuously improving my skills in:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Web Development
+- Data Structures & Algorithms
+- Problem Solving
+- Software Engineering
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+I am currently focused on growing as a **Full Stack Developer** and building impactful projects.
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+# 🛠️ Tech Stack
 
-**Edit a file directly in GitHub**
+This portfolio is built using modern web technologies:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
+**Frontend**
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
 
-## How can I deploy this project?
+**UI Components**
+- Radix UI
+- Shadcn UI
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+**Deployment**
+- Vercel
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+# 📂 Features
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+The portfolio includes the following sections:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- 🏠 Home / Hero Section
+- 👨‍💻 About Me
+- 🧠 Skills
+- 📁 Projects
+- 📬 Contact
+
+Features of the website:
+
+- Fully responsive design
+- Modern UI/UX
+- Smooth navigation
+- Clean component-based structure
+- Fast loading with Vite
+
+---
+
+# 📸 Portfolio Sections
+
+### Hero Section
+Introduction and personal branding.
+
+### About Me
+Brief overview of my background and goals.
+
+### Skills
+Showcases my technical and development skills.
+
+### Projects
+Highlights the projects I have built.
+
+### Contact
+Ways to connect with me.
+
+---
+
+# ⚙️ Installation & Setup
+
+If you want to run this project locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/raghurajsingh152007-ctrl/MyPortfolio.git
+
+# Navigate to project folder
+cd MyPortfolio
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
