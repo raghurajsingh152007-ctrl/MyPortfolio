@@ -16,7 +16,7 @@ const achievements = [
     icon: "💻",
   },
   {
-    title: "CGPA 8.8 in B.Tech CSE",
+    title: "CGPA 8.08 in B.Tech CSE",
     description:
       "Maintaining an excellent academic record with a CGPA of 8.08 in Computer Science Engineering at Amity University, Punjab.",
     date: "Ongoing",
